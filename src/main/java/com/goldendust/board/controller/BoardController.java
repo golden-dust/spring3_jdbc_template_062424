@@ -66,6 +66,7 @@ public class BoardController {
 		command = new BViewOneCommand();
 		command.execute(model);
 		
+		
 		return "readPost";
 	}
 	

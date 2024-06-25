@@ -59,6 +59,8 @@ public class BoardDao {
 	
 	public BoardDto findById(String bnum) {
 		
+		incrementViewCount(bnum);
+		
 		String sql = "SELECT * FROM springboard WHERE bnum = " + bnum;
 		
 		BoardDto bDto = this.template.queryForObject(sql, new BeanPropertyRowMapper(BoardDto.class));
@@ -91,6 +93,20 @@ public class BoardDao {
 				ps.setString(1, bnum);
 			}
 		});
+	}
+	
+	public void incrementViewCount(final String bnum) {
+		
+		String sql = "UPDATE springboard SET bhit=bhit+1 WHERE bnum=?";
+		
+		this.template.update(sql, new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setString(1, bnum);
+			}
+		});
+		// dao 오브젝트 가져오는 메소드에 넣어주기
 	}
 
 }
